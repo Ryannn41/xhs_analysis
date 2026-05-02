@@ -6,7 +6,6 @@ from typing import Any
 
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import Response
 from pydantic import BaseModel, Field
 
 from backend.config import (
@@ -77,22 +76,6 @@ async def start_login(payload: LoginStartRequest | None = None) -> dict[str, Any
         return await login_session.start()
     except Exception as error:
         raise HTTPException(status_code=502, detail=str(error)) from error
-
-
-@app.get("/api/xhs/session/login/screenshot")
-async def login_screenshot() -> Response:
-    try:
-        image = await login_session.screenshot()
-    except RuntimeError as error:
-        raise HTTPException(status_code=409, detail=str(error)) from error
-    except Exception as error:
-        raise HTTPException(status_code=502, detail=str(error)) from error
-
-    return Response(
-        content=image,
-        media_type="image/png",
-        headers={"Cache-Control": "no-store"},
-    )
 
 
 @app.post("/api/xhs/session/login/save")
