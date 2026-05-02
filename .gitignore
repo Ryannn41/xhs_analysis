@@ -1,0 +1,10 @@
+.env
+__pycache__/
+*.py[cod]
+.venv/
+node_modules/
+dist/
+
+# Playwright 登录态与运行缓存
+backend/storage/
+backend/data/cache/
