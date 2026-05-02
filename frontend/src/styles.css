@@ -84,6 +84,30 @@ a {
   gap: 10px;
 }
 
+.login-screenshot {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  grid-column: 1 / -1;
+  padding: 12px;
+}
+
+.login-screenshot img {
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  display: block;
+  max-height: 560px;
+  object-fit: contain;
+  width: 100%;
+}
+
+.login-screenshot p {
+  color: #64748b;
+  font-size: 13px;
+  margin-top: 10px;
+}
+
 .secondary-button {
   background: #334155;
 }

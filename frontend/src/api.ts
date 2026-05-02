@@ -70,6 +70,7 @@ export interface SessionStatus {
   storage_state: string;
   storage_state_updated_at: string | null;
   login_in_progress: boolean;
+  login_screenshot_available: boolean;
 }
 
 async function parseJsonResponse<T>(response: Response): Promise<T> {
@@ -116,6 +117,10 @@ export async function startLoginSession(): Promise<SessionStatus> {
     body: JSON.stringify({}),
   });
   return parseJsonResponse<SessionStatus>(response);
+}
+
+export function getLoginScreenshotUrl(version = Date.now()) {
+  return `${API_BASE_URL}/api/xhs/session/login/screenshot?t=${version}`;
 }
 
 export async function saveLoginSession(): Promise<SessionStatus> {
