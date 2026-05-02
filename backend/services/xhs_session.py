@@ -9,6 +9,7 @@ from playwright.async_api import Browser, BrowserContext, Page, Playwright, asyn
 from backend.config import (
     BROWSER_CHANNEL,
     BROWSER_EXECUTABLE_PATH,
+    BROWSER_HEADLESS,
     BROWSER_TIMEOUT_MS,
     XHS_BASE_URL,
     XHS_STORAGE_STATE,
@@ -31,9 +32,9 @@ def storage_state_info(storage_state: Path = XHS_STORAGE_STATE) -> dict[str, Any
     }
 
 
-def browser_launch_options() -> dict[str, Any]:
+def browser_launch_options(headless: bool = BROWSER_HEADLESS) -> dict[str, Any]:
     launch_options: dict[str, Any] = {
-        "headless": False,
+        "headless": headless,
         "timeout": BROWSER_TIMEOUT_MS,
     }
     if BROWSER_CHANNEL:
@@ -44,8 +45,9 @@ def browser_launch_options() -> dict[str, Any]:
 
 
 class XhsLoginSession:
-    def __init__(self, storage_state: Path = XHS_STORAGE_STATE):
+    def __init__(self, storage_state: Path = XHS_STORAGE_STATE, headless: bool = BROWSER_HEADLESS):
         self.storage_state = storage_state
+        self.headless = headless
         self._playwright: Playwright | None = None
         self._browser: Browser | None = None
         self._context: BrowserContext | None = None
@@ -58,6 +60,7 @@ class XhsLoginSession:
         return {
             **storage_state_info(self.storage_state),
             "login_in_progress": self.is_active(),
+            "login_screenshot_available": self._page is not None,
         }
 
     async def start(self, url: str = XHS_BASE_URL) -> dict[str, Any]:
@@ -67,14 +70,23 @@ class XhsLoginSession:
         ensure_runtime_dirs()
         self.storage_state.parent.mkdir(parents=True, exist_ok=True)
         self._playwright = await async_playwright().start()
-        self._browser = await self._playwright.chromium.launch(**browser_launch_options())
+        self._browser = await self._playwright.chromium.launch(
+            **browser_launch_options(self.headless)
+        )
         self._context = await self._browser.new_context(
-            **xhs_context_options(self.storage_state)
+            **xhs_context_options()
         )
         self._context.set_default_timeout(BROWSER_TIMEOUT_MS)
         self._page = await self._context.new_page()
         await self._page.goto(url)
         return self.status()
+
+    async def screenshot(self) -> bytes:
+        if not self._page:
+            raise RuntimeError("当前没有进行中的登录会话，请先点击开始登录。")
+
+        await self._page.wait_for_timeout(300)
+        return await self._page.screenshot(type="png", full_page=True)
 
     async def save(self) -> dict[str, Any]:
         if not self._context:

@@ -48,18 +48,17 @@ playwright install chromium
 uvicorn backend.app:app --reload --host 0.0.0.0 --port 8000
 ```
 
-如果抓取小红书页面出现 `Page.goto: net::ERR_TIMED_OUT`，建议本地开发时在 `.env` 中使用可视化浏览器并延长超时：
+如果抓取小红书页面出现 `Page.goto: net::ERR_TIMED_OUT`，建议延长超时：
 
 ```env
-BROWSER_HEADLESS=false
 BROWSER_TIMEOUT_MS=90000
 ```
 
 ## 准备登录态
 
-后端默认读取 `backend/storage/xhs_state.json`。启动前端后，可以在页面顶部点击“重新登录”打开可视化浏览器，登录完成并确认小红书首页/个人入口已显示登录状态后，再点击“保存登录态”。
+后端默认读取 `backend/storage/xhs_state.json`。启动前端后，可以在页面顶部点击“重新登录”，后端会启动 Playwright 登录会话并把登录页截图展示在前端。使用小红书 App 扫描截图里的二维码并确认登录后，再点击“保存登录态”。
 
-也可以用命令行脚本生成或刷新登录态：
+本地开发时，也可以用命令行脚本生成或刷新登录态：
 
 ```bash
 python -m backend.save_xhs_state

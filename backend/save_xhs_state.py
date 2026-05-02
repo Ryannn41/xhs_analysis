@@ -19,7 +19,7 @@ def parse_args() -> argparse.Namespace:
 
 async def main() -> None:
     args = parse_args()
-    session = XhsLoginSession()
+    session = XhsLoginSession(headless=False)
     try:
         await session.start(args.url)
         print("请在打开的浏览器中完成小红书登录。")
