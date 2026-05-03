@@ -5,10 +5,26 @@
 ## 功能概览
 
 - 使用 Playwright 保存并复用小红书浏览器登录态。
+
+  ![登录态与浏览器持久化](docs/images/overview-01-login-state.png)
+
 - 支持输入昵称、`user_id` 或小红书用户主页 URL 查询账号。
+
+  ![单账号查询输入](docs/images/overview-02-single-query.png)
+
 - 支持上传 Excel 批量查询账号，前端会展示读取预览和逐个账号的抓取进度。
+
+  ![Excel 批量与进度](docs/images/overview-03-excel-batch.png)
+
+  ![Playwright 浏览器抓取](docs/images/overview-03-browser-scrape.png)
+
 - 支持按日期范围统计账号笔记数据，默认统计最近 30 天。
+
+  ![日期范围与统计](docs/images/overview-04-date-range.png)
+
 - 支持将成功查询的结果下载为 Excel，包含账号汇总和笔记明细两个工作表。
+
+  ![结果导出 Excel](docs/images/overview-05-export.png)
 
 ## 📦 Download
 👉 [Download Windows Installer](https://github.com/Ryannn41/xhs_analysis/releases/latest)
