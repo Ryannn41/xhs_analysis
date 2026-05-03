@@ -10,6 +10,9 @@
 - 支持按日期范围统计账号笔记数据，默认统计最近 30 天。
 - 支持将成功查询的结果下载为 Excel，包含账号汇总和笔记明细两个工作表。
 
+## 📦 Download
+👉 [Download Windows Installer](https://github.com/Ryannn41/xhs_analysis/releases/latest)
+
 ## 目录结构
 
 ```text
