@@ -1,0 +1,84 @@
+{
+  "created_at": 1777713869.5172398,
+  "data": {
+    "account": {
+      "input": "5c2b2f070000000005014135",
+      "user_id": "5c2b2f070000000005014135",
+      "nickname": "",
+      "profile_url": "https://www.xiaohongshu.com/user/profile/5c2b2f070000000005014135"
+    },
+    "profile": {
+      "user_id": "5c2b2f070000000005014135",
+      "nickname": "南京香格里拉",
+      "desc": "旅游 ｜人文 ｜展览 ｜婚宴 ｜攻略…",
+      "red_id": "Shangrila_nj",
+      "gender": 1,
+      "ip_location": "浙江",
+      "follows_count_display": "1153",
+      "follows_count_lower_bound": 1153,
+      "fans_count_display": "25344",
+      "fans_count_lower_bound": 25344,
+      "interaction_count_display": "138448",
+      "interaction_count_lower_bound": 138448
+    },
+    "notes": [
+      {
+        "note_id": "69f32f1c00000000350230dd",
+        "title": "恭喜“粽”签🎁端午礼盒试吃官招募啦🎉",
+        "desc": "",
+        "type": "normal",
+        "time": "2026-04-30 18:29:48",
+        "last_update_time": "2026-04-30 18:29:48",
+        "xsec_token": "AB9rF-O5QYNnUWf0CGzsogq8XXebf4kW3jPjBA2AbMuNY=",
+        "cover_url": "http://sns-webpic-qc.xhscdn.com/202605021724/d81ec1a247870127010fd043ada0d8df/notes_pre_post/1040g3k031vj5jjcrkc305n1b5s3hag9lmplum98!nc_n_webp_mw_1",
+        "url": "https://www.xiaohongshu.com/explore/69f32f1c00000000350230dd?xsec_token=AB9rF-O5QYNnUWf0CGzsogq8XXebf4kW3jPjBA2AbMuNY%3D&xsec_source=pc_user",
+        "account_user_id": "5c2b2f070000000005014135",
+        "account_nickname": "南京香格里拉",
+        "liked_count_display": "56",
+        "liked_count": 56,
+        "collected_count_display": "47",
+        "collected_count": 47,
+        "comment_count_display": "62",
+        "comment_count": 62,
+        "share_count_display": "6",
+        "share_count": 6
+      },
+      {
+        "note_id": "69f32e5d00000000360029c5",
+        "title": "限时体验官招募｜「焕新夏日」联名下午茶",
+        "desc": "",
+        "type": "normal",
+        "time": "2026-04-30 18:26:37",
+        "last_update_time": "2026-04-30 18:26:37",
+        "xsec_token": "AB9rF-O5QYNnUWf0CGzsogqwwrP0sA8uSZoxiCiRCXmdo=",
+        "cover_url": "http://sns-webpic-qc.xhscdn.com/202605021724/4367ca39f329d2efca5d24b17bcc10e3/notes_pre_post/1040g3k031vj5jjcrkc005n1b5s3hag9l972nfqo!nc_n_webp_mw_1",
+        "url": "https://www.xiaohongshu.com/explore/69f32e5d00000000360029c5?xsec_token=AB9rF-O5QYNnUWf0CGzsogqwwrP0sA8uSZoxiCiRCXmdo%3D&xsec_source=pc_user",
+        "account_user_id": "5c2b2f070000000005014135",
+        "account_nickname": "南京香格里拉",
+        "liked_count_display": "42",
+        "liked_count": 42,
+        "collected_count_display": "19",
+        "collected_count": 19,
+        "comment_count_display": "30",
+        "comment_count": 30,
+        "share_count_display": "6",
+        "share_count": 6
+      }
+    ],
+    "stats": {
+      "followers_display": "25344",
+      "followers_count": 25344,
+      "period_start": "2026-04-25",
+      "period_end": "2026-05-02",
+      "period_note_count": 2,
+      "period_liked_total": 98,
+      "period_collected_total": 66,
+      "period_comment_total": 92,
+      "period_share_total": 12,
+      "scanned_note_count": 30,
+      "reached_range_start": true
+    },
+    "source": "playwright_profile_page",
+    "fetched_at": "2026-05-02T17:24:29"
+  }
+}

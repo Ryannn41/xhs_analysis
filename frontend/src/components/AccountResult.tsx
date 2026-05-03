@@ -1,7 +1,11 @@
+import { useMemo, useState } from "react";
 import { AccountResult as AccountResultData } from "../api";
+
+const NOTES_PREVIEW_COUNT = 6;
 
 interface AccountResultProps {
   result: AccountResultData;
+  animationDelay?: string;
 }
 
 function formatNumber(value: number) {
@@ -16,30 +20,41 @@ function noteCountDisplay(display: string | undefined, value: number) {
   return display || formatCount(value);
 }
 
-export default function AccountResult({ result }: AccountResultProps) {
+export default function AccountResult({ result, animationDelay }: AccountResultProps) {
+  const [showAllNotes, setShowAllNotes] = useState(false);
   const { profile, notes, stats } = result;
   const followers =
     stats.followers_display || (stats.followers_count ? formatNumber(stats.followers_count) : "-");
 
+  const statsAnchorId = useMemo(() => {
+    const raw = result.account.user_id || "account";
+    return `account-stats-${raw.replace(/[^a-zA-Z0-9_-]/g, "-")}`;
+  }, [result.account.user_id]);
+
+  const visibleNotes = showAllNotes ? notes : notes.slice(0, NOTES_PREVIEW_COUNT);
+  const hasMoreNotes = notes.length > NOTES_PREVIEW_COUNT;
+
   return (
-    <section className="result-card">
+    <section className="result-card" style={{ animationDelay }}>
       <div className="result-header">
         <div>
-          <p className="eyebrow">{result.cached ? "缓存结果" : "实时抓取"}</p>
+          <p className="eyebrow">实时抓取</p>
           <h2>{profile.nickname || result.account.user_id}</h2>
           <p>{profile.desc || "暂无简介"}</p>
-          {result.cached ? (
-            <p className="cache-notice">当前展示的是缓存数据。如需获取实时新数据，请勾选“跳过缓存”后重新查询。</p>
-          ) : null}
         </div>
-        <a href={result.account.profile_url} target="_blank" rel="noreferrer">
+        <a
+          className="link-button"
+          href={result.account.profile_url}
+          target="_blank"
+          rel="noreferrer"
+        >
           打开主页
         </a>
       </div>
 
-      <div className="stats-summary">
+      <div className="stats-summary stats-anchor" id={statsAnchorId}>
         <div>
-          <span>粉丝量</span>
+          <span>账号粉丝量</span>
           <strong>{followers}</strong>
         </div>
         <div>
@@ -79,14 +94,36 @@ export default function AccountResult({ result }: AccountResultProps) {
 
       {!stats.reached_range_start ? (
         <p className="range-warning">
-          本次抓取未确认完整覆盖所选开始日期，较早帖子可能未统计到。
+          【提示】本次抓取未确认完整覆盖所选开始日期，较早帖子可能未统计到。
         </p>
       ) : null}
 
+      {notes.length ? (
+        <div className="period-notes-head">
+          <h3>区间内笔记</h3>
+          <a className="to-stats" href={`#${statsAnchorId}`}>
+            ↑ 跳转到统计
+          </a>
+        </div>
+      ) : null}
+
       <div className="period-notes">
-        {notes.map((note) => (
-          <article className="note-card" key={note.note_id}>
-            {note.cover_url ? <img src={note.cover_url} alt={note.title} /> : null}
+        {visibleNotes.map((note, noteIndex) => (
+          <article
+            className="note-card"
+            key={note.note_id}
+            style={{
+              animationDelay: animationDelay
+                ? `calc(${animationDelay} + ${noteIndex * 0.035}s)`
+                : `${noteIndex * 0.035}s`,
+            }}
+          >
+            {note.cover_url ? (
+              <img
+                src={note.cover_url}
+                alt={note.title?.trim() ? note.title : "笔记封面"}
+              />
+            ) : null}
             <p className="note-time">{note.time || "发布时间未知"}</p>
             <h3>{note.title || "无标题笔记"}</h3>
             <p>{note.desc}</p>
@@ -97,14 +134,27 @@ export default function AccountResult({ result }: AccountResultProps) {
               <span>转 {noteCountDisplay(note.share_count_display, note.share_count)}</span>
             </div>
             {note.url ? (
-              <a href={note.url} target="_blank" rel="noreferrer">
+              <a className="link-button" href={note.url} target="_blank" rel="noreferrer">
                 查看笔记
               </a>
             ) : null}
           </article>
         ))}
+        {hasMoreNotes ? (
+          <div className="notes-expand-row">
+            <button
+              type="button"
+              className="notes-expand-button"
+              onClick={() => setShowAllNotes((value) => !value)}
+            >
+              {showAllNotes ? "收起笔记列表" : `展开全部笔记（共 ${notes.length} 条）`}
+            </button>
+          </div>
+        ) : null}
       </div>
-      {!notes.length ? <p className="empty-result">所选时间段内没有可统计的帖子。</p> : null}
+      {!notes.length ? (
+        <p className="empty-result">【提示】所选时间段内没有可统计的帖子。</p>
+      ) : null}
     </section>
   );
 }

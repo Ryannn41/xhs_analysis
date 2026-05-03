@@ -1,0 +1,41 @@
+{
+  "created_at": 1777713880.9604335,
+  "data": {
+    "account": {
+      "input": "5c863218000000001600373e",
+      "user_id": "5c863218000000001600373e",
+      "nickname": "",
+      "profile_url": "https://www.xiaohongshu.com/user/profile/5c863218000000001600373e"
+    },
+    "profile": {
+      "user_id": "5c863218000000001600373e",
+      "nickname": "温州香格里拉",
+      "desc": "坐拥瓯江迷人景致，毗邻滨江万象城和国际会展中心，步行可至打卡胜地城市阳台，豪华阁高空俯瞰城市壮景\n\n浪漫的城市灯光秀、大快朵颐的舌尖体验、畅享旅居的品质时光，以心相待的服务，为您创造旅途中的美好时刻！",
+      "red_id": "891310698",
+      "gender": 1,
+      "ip_location": "浙江",
+      "follows_count_display": "197",
+      "follows_count_lower_bound": 197,
+      "fans_count_display": "12836",
+      "fans_count_lower_bound": 12836,
+      "interaction_count_display": "48930",
+      "interaction_count_lower_bound": 48930
+    },
+    "notes": [],
+    "stats": {
+      "followers_display": "12836",
+      "followers_count": 12836,
+      "period_start": "2026-04-25",
+      "period_end": "2026-05-02",
+      "period_note_count": 0,
+      "period_liked_total": 0,
+      "period_collected_total": 0,
+      "period_comment_total": 0,
+      "period_share_total": 0,
+      "scanned_note_count": 32,
+      "reached_range_start": true
+    },
+    "source": "playwright_profile_page",
+    "fetched_at": "2026-05-02T17:24:40"
+  }
+}

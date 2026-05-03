@@ -57,7 +57,6 @@ export interface AccountResult {
   stats: AccountStats;
   source: string;
   fetched_at: string;
-  cached: boolean;
 }
 
 export interface AccountInput {
@@ -65,10 +64,18 @@ export interface AccountInput {
   id: string;
 }
 
+export interface CurrentUser {
+  nickname?: string;
+  avatar_url?: string;
+  profile_url?: string;
+  red_id?: string;
+}
+
 export interface SessionStatus {
   has_login_state: boolean;
   storage_state: string;
   storage_state_updated_at: string | null;
+  current_user: CurrentUser | null;
   login_in_progress: boolean;
 }
 
@@ -82,7 +89,6 @@ async function parseJsonResponse<T>(response: Response): Promise<T> {
 
 export async function fetchAccountProfile(
   account: string,
-  refresh = false,
   startDate = "",
   endDate = "",
 ): Promise<AccountResult> {
@@ -93,7 +99,6 @@ export async function fetchAccountProfile(
     },
     body: JSON.stringify({
       account,
-      refresh,
       start_date: startDate || null,
       end_date: endDate || null,
     }),

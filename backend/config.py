@@ -15,15 +15,14 @@ except ImportError:
     pass
 
 DATA_DIR = BASE_DIR / "data"
-CACHE_DIR = DATA_DIR / "cache"
 STORAGE_DIR = BASE_DIR / "storage"
 ACCOUNTS_FILE = DATA_DIR / "accounts.json"
 
 XHS_BASE_URL = "https://www.xiaohongshu.com"
 _storage_state = Path(os.getenv("XHS_STORAGE_STATE", str(STORAGE_DIR / "xhs_state.json")))
 XHS_STORAGE_STATE = _storage_state if _storage_state.is_absolute() else ROOT_DIR / _storage_state
+XHS_CURRENT_USER_FILE = XHS_STORAGE_STATE.with_name("xhs_current_user.json")
 
-CACHE_TTL_SECONDS = int(os.getenv("CACHE_TTL_SECONDS", "900"))
 BROWSER_HEADLESS = os.getenv("BROWSER_HEADLESS", "true").lower() in {
     "1",
     "true",
@@ -52,5 +51,4 @@ FRONTEND_ORIGIN_REGEX = os.getenv(
 
 def ensure_runtime_dirs() -> None:
     DATA_DIR.mkdir(parents=True, exist_ok=True)
-    CACHE_DIR.mkdir(parents=True, exist_ok=True)
     STORAGE_DIR.mkdir(parents=True, exist_ok=True)

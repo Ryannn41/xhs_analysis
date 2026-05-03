@@ -40,17 +40,48 @@ export default function SessionPanel() {
   const updatedAt = status?.storage_state_updated_at
     ? new Date(status.storage_state_updated_at).toLocaleString()
     : "尚未保存";
+  const currentUser = status?.current_user;
+  const displayName = currentUser?.nickname || "当前登录账号";
+  const avatarText = displayName.slice(0, 1).toUpperCase();
 
   return (
     <section className="session-card">
-      <div>
-        <p className="eyebrow">登录态</p>
-        <h2>{status?.has_login_state ? "已配置" : "未配置"}</h2>
-        <p>
-          {status?.login_in_progress
-            ? "登录窗口已打开，请完成登录后点击保存。"
-            : `更新时间：${updatedAt}`}
-        </p>
+      <aside className="session-account-risk" role="note">
+        用于登录本工具的小红书账号会因自动化访问被平台判定风险，可能导致功能受限或封号；它与下方要分析的博主账号无关。
+        建议使用备用小号（例如虚拟手机号注册的账号），不要使用常用主号登录。
+      </aside>
+      <div className="session-main">
+        {currentUser ? (
+          <div className="session-avatar" aria-hidden>
+            {currentUser.avatar_url ? (
+              <img src={currentUser.avatar_url} alt="" />
+            ) : (
+              <span>{avatarText}</span>
+            )}
+          </div>
+        ) : null}
+        <div>
+          <p className="eyebrow">登录态</p>
+          <h2>
+            {currentUser?.profile_url ? (
+              <a href={currentUser.profile_url} target="_blank" rel="noreferrer">
+                {displayName}
+              </a>
+            ) : currentUser ? (
+              displayName
+            ) : status?.has_login_state ? (
+              "已配置"
+            ) : (
+              "未配置"
+            )}
+          </h2>
+          {currentUser?.red_id ? <p>小红书号：{currentUser.red_id}</p> : null}
+          <p>
+            {status?.login_in_progress
+              ? "登录窗口已打开，请完成登录后点击保存。"
+              : `更新时间：${updatedAt}`}
+          </p>
+        </div>
       </div>
       <div className="session-actions">
         <button

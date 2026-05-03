@@ -1,0 +1,84 @@
+{
+  "created_at": 1777713861.2948613,
+  "data": {
+    "account": {
+      "input": "5e23c943000000000100408e",
+      "user_id": "5e23c943000000000100408e",
+      "nickname": "",
+      "profile_url": "https://www.xiaohongshu.com/user/profile/5e23c943000000000100408e"
+    },
+    "profile": {
+      "user_id": "5e23c943000000000100408e",
+      "nickname": "福州香格里拉",
+      "desc": "🔹🚇 南门兜地铁｜三坊七巷遛弯10分钟\n🔹 米其林一星餐厅 ｜ 江南灶·融府\n🔹 直通香格里拉八匚汇｜五一广场\n🔹 行走的福州citywalk地图🗺\n🔹 旅行｜美食｜婚宴｜攻略",
+      "red_id": "799017659",
+      "gender": 1,
+      "ip_location": "福建",
+      "follows_count_display": "29",
+      "follows_count_lower_bound": 29,
+      "fans_count_display": "10130",
+      "fans_count_lower_bound": 10130,
+      "interaction_count_display": "14648",
+      "interaction_count_lower_bound": 14648
+    },
+    "notes": [
+      {
+        "note_id": "69f405fd0000000038036ea8",
+        "title": "五一去哪玩❗福州城市活动合集🎁宠粉",
+        "desc": "",
+        "type": "normal",
+        "time": "2026-05-01 09:46:37",
+        "last_update_time": "2026-05-01 10:36:42",
+        "xsec_token": "ABq_R5q1oHC9JXSQlFu6Q1XkzmyxuqgPubl3XuNACVEqw=",
+        "cover_url": "http://sns-webpic-qc.xhscdn.com/202605021724/3a999e91db2263cba6b9be7d948f7915/spectrum/1040g34o31vjvqu7048105nh3p51g8g4emtme6q8!nc_n_webp_mw_1",
+        "url": "https://www.xiaohongshu.com/explore/69f405fd0000000038036ea8?xsec_token=ABq_R5q1oHC9JXSQlFu6Q1XkzmyxuqgPubl3XuNACVEqw%3D&xsec_source=pc_user",
+        "account_user_id": "5e23c943000000000100408e",
+        "account_nickname": "福州香格里拉",
+        "liked_count_display": "14",
+        "liked_count": 14,
+        "collected_count_display": "13",
+        "collected_count": 13,
+        "comment_count_display": "15",
+        "comment_count": 15,
+        "share_count_display": "13",
+        "share_count": 13
+      },
+      {
+        "note_id": "69ee0a96000000003501f75b",
+        "title": "🎁 开香有礼 | 解锁至高＄2200 好礼",
+        "desc": "",
+        "type": "normal",
+        "time": "2026-04-26 20:52:38",
+        "last_update_time": "2026-04-27 11:52:05",
+        "xsec_token": "ABwl_9rPxCjpRTEIMkcxahjpMIEn40RgOnU_9WLBRyi4Y=",
+        "cover_url": "http://sns-webpic-qc.xhscdn.com/202605021724/c3a33e5c2bd0c95c47585d1d4539d4d3/spectrum/1040g34o31veuobua1m105nh3p51g8g4e8atlbno!nc_n_webp_mw_1",
+        "url": "https://www.xiaohongshu.com/explore/69ee0a96000000003501f75b?xsec_token=ABwl_9rPxCjpRTEIMkcxahjpMIEn40RgOnU_9WLBRyi4Y%3D&xsec_source=pc_user",
+        "account_user_id": "5e23c943000000000100408e",
+        "account_nickname": "福州香格里拉",
+        "liked_count_display": "4",
+        "liked_count": 4,
+        "collected_count_display": "5",
+        "collected_count": 5,
+        "comment_count_display": "1",
+        "comment_count": 1,
+        "share_count_display": "1",
+        "share_count": 1
+      }
+    ],
+    "stats": {
+      "followers_display": "10130",
+      "followers_count": 10130,
+      "period_start": "2026-04-25",
+      "period_end": "2026-05-02",
+      "period_note_count": 2,
+      "period_liked_total": 18,
+      "period_collected_total": 18,
+      "period_comment_total": 16,
+      "period_share_total": 14,
+      "scanned_note_count": 32,
+      "reached_range_start": true
+    },
+    "source": "playwright_profile_page",
+    "fetched_at": "2026-05-02T17:24:21"
+  }
+}

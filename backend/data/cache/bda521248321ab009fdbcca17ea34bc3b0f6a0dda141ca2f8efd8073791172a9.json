@@ -1,0 +1,41 @@
+{
+  "created_at": 1777713884.6328466,
+  "data": {
+    "account": {
+      "input": "5cc71eea00000000120158b5",
+      "user_id": "5cc71eea00000000120158b5",
+      "nickname": "",
+      "profile_url": "https://www.xiaohongshu.com/user/profile/5cc71eea00000000120158b5"
+    },
+    "profile": {
+      "user_id": "5cc71eea00000000120158b5",
+      "nickname": "苏州园区香格里拉",
+      "desc": "📍中国江苏省苏州工业园区思安街99号协鑫广场（86 512 6263 9999\n🌟俯瞰湖光城景，品味淮扬美食与环球佳肴，尽享惬意旅居史\n光⋯\n打卡点旋转楼梯| 隐秀酒廊| 红墙|亲子客房",
+      "red_id": "642925027",
+      "gender": 0,
+      "ip_location": "江苏",
+      "follows_count_display": "140",
+      "follows_count_lower_bound": 140,
+      "fans_count_display": "16935",
+      "fans_count_lower_bound": 16935,
+      "interaction_count_display": "37009",
+      "interaction_count_lower_bound": 37009
+    },
+    "notes": [],
+    "stats": {
+      "followers_display": "16935",
+      "followers_count": 16935,
+      "period_start": "2026-04-25",
+      "period_end": "2026-05-02",
+      "period_note_count": 0,
+      "period_liked_total": 0,
+      "period_collected_total": 0,
+      "period_comment_total": 0,
+      "period_share_total": 0,
+      "scanned_note_count": 32,
+      "reached_range_start": true
+    },
+    "source": "playwright_profile_page",
+    "fetched_at": "2026-05-02T17:24:44"
+  }
+}

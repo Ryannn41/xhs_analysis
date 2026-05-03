@@ -6,7 +6,6 @@ interface SearchBoxProps {
   loading: boolean;
   onSearch: (
     accounts: AccountInput[],
-    refresh: boolean,
     startDate: string,
     endDate: string,
   ) => void;
@@ -36,7 +35,6 @@ export default function SearchBox({ loading, onSearch }: SearchBoxProps) {
   const [uploadedAccounts, setUploadedAccounts] = useState<AccountInput[]>([]);
   const [uploadedFileName, setUploadedFileName] = useState("");
   const [uploadError, setUploadError] = useState("");
-  const [refresh, setRefresh] = useState(false);
   const [startDate, setStartDate] = useState(defaultStartDate);
   const [endDate, setEndDate] = useState(() => formatDateInput(new Date()));
 
@@ -47,7 +45,7 @@ export default function SearchBox({ loading, onSearch }: SearchBoxProps) {
         ? uploadedAccounts
         : [{ name: account.trim(), id: account.trim() }];
 
-    onSearch(accounts, refresh, startDate, endDate);
+    onSearch(accounts, startDate, endDate);
   }
 
   async function handleExcelUpload(event: ChangeEvent<HTMLInputElement>) {
@@ -110,68 +108,69 @@ export default function SearchBox({ loading, onSearch }: SearchBoxProps) {
 
   return (
     <form className="search-box" onSubmit={handleSubmit}>
-      <div className="search-main">
-        <input
-          type="text"
-          value={account}
-          onChange={(event) => {
-            setAccount(event.target.value);
-            if (event.target.value.trim()) {
-              setUploadedAccounts([]);
-              setUploadedFileName("");
-            }
-          }}
-          placeholder="输入昵称、user_id 或小红书主页 URL"
-          disabled={loading}
-        />
-        <label className="upload-field">
-          上传 Excel
+      <div className="search-group search-group--account">
+        <p className="search-group-title">账号来源</p>
+        <div className="search-main">
           <input
-            type="file"
-            accept=".xlsx,.xls"
-            onChange={handleExcelUpload}
+            type="text"
+            value={account}
+            onChange={(event) => {
+              setAccount(event.target.value);
+              if (event.target.value.trim()) {
+                setUploadedAccounts([]);
+                setUploadedFileName("");
+              }
+            }}
+            placeholder="输入昵称、user_id 或小红书主页 URL"
+            disabled={loading}
+            aria-label="账号：昵称、user_id 或主页 URL"
+          />
+          <label className="upload-field">
+            上传 Excel
+            <input
+              type="file"
+              accept=".xlsx,.xls"
+              onChange={handleExcelUpload}
+              disabled={loading}
+            />
+          </label>
+          {uploadedFileName ? <span className="uploaded-file">{uploadedFileName}</span> : null}
+        </div>
+      </div>
+
+      <div className="search-group search-group--dates">
+        <p className="search-group-title">时间范围</p>
+        <label className="date-field">
+          开始
+          <input
+            type="date"
+            value={startDate}
+            onChange={(event) => setStartDate(event.target.value)}
             disabled={loading}
           />
         </label>
-        {uploadedFileName ? <span className="uploaded-file">{uploadedFileName}</span> : null}
-      </div>
-      <label className="date-field">
-        开始
-        <input
-          type="date"
-          value={startDate}
-          onChange={(event) => setStartDate(event.target.value)}
-          disabled={loading}
-        />
-      </label>
-      <label className="date-field">
-        结束
-        <input
-          type="date"
-          value={endDate}
-          onChange={(event) => setEndDate(event.target.value)}
-          disabled={loading}
-        />
-      </label>
-      <label className="cache-field">
-        <span>
+        <label className="date-field">
+          结束
           <input
-            type="checkbox"
-            checked={refresh}
-            onChange={(event) => setRefresh(event.target.checked)}
+            type="date"
+            value={endDate}
+            onChange={(event) => setEndDate(event.target.value)}
             disabled={loading}
           />
-          跳过缓存
-        </span>
-        <small>不勾选会优先使用缓存；需要实时新数据时请勾选。</small>
-      </label>
-      <button type="submit" disabled={loading || !hasAccountInput || isInvalidRange}>
-        {loading
-          ? "抓取中..."
-          : uploadedAccounts.length
-            ? `批量查询 ${uploadedAccounts.length} 个账号`
-            : "查询账号"}
-      </button>
+        </label>
+      </div>
+
+      <div className="search-group search-group--options">
+        <p className="search-group-title">选项与提交</p>
+        <button type="submit" disabled={loading || !hasAccountInput || isInvalidRange}>
+          {loading
+            ? "抓取中..."
+            : uploadedAccounts.length
+              ? `批量查询 ${uploadedAccounts.length} 个账号`
+              : "查询账号"}
+        </button>
+      </div>
+
       {uploadedAccounts.length ? (
         <div className="upload-preview">
           <div className="upload-preview-header">

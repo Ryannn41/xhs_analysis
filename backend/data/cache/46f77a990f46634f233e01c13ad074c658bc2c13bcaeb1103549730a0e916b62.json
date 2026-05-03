@@ -1,0 +1,63 @@
+{
+  "created_at": 1777713842.7854674,
+  "data": {
+    "account": {
+      "input": "5d6c67720000000001007517",
+      "user_id": "5d6c67720000000001007517",
+      "nickname": "",
+      "profile_url": "https://www.xiaohongshu.com/user/profile/5d6c67720000000001007517"
+    },
+    "profile": {
+      "user_id": "5d6c67720000000001007517",
+      "nickname": "三亚香格里拉",
+      "desc": "🏝静谧海滨度假天堂您的家外之家🌇",
+      "red_id": "ShangrilaSanya",
+      "gender": 1,
+      "ip_location": "浙江",
+      "follows_count_display": "8",
+      "follows_count_lower_bound": 8,
+      "fans_count_display": "13755",
+      "fans_count_lower_bound": 13755,
+      "interaction_count_display": "32388",
+      "interaction_count_lower_bound": 32388
+    },
+    "notes": [
+      {
+        "note_id": "69f091d400000000350242ff",
+        "title": "招募跨界合作伙伴，共创Sportcation新可能",
+        "desc": "",
+        "type": "normal",
+        "time": "2026-04-28 18:54:12",
+        "last_update_time": "2026-04-28 18:54:13",
+        "xsec_token": "ABxzx0SGveMdyaMqibX30qAEJKIaU2RR4RSShJRKkzabE=",
+        "cover_url": "http://sns-webpic-qc.xhscdn.com/202605021723/41084e2e66ec95296764294e73c22496/spectrum/1040g0k031vgk0fga4c005nbcctp08t8n10lurfg!nc_n_webp_mw_1",
+        "url": "https://www.xiaohongshu.com/explore/69f091d400000000350242ff?xsec_token=ABxzx0SGveMdyaMqibX30qAEJKIaU2RR4RSShJRKkzabE%3D&xsec_source=pc_user",
+        "account_user_id": "5d6c67720000000001007517",
+        "account_nickname": "三亚香格里拉",
+        "liked_count_display": "5",
+        "liked_count": 5,
+        "collected_count_display": "6",
+        "collected_count": 6,
+        "comment_count_display": "1",
+        "comment_count": 1,
+        "share_count_display": "10",
+        "share_count": 10
+      }
+    ],
+    "stats": {
+      "followers_display": "13755",
+      "followers_count": 13755,
+      "period_start": "2026-04-25",
+      "period_end": "2026-05-02",
+      "period_note_count": 1,
+      "period_liked_total": 5,
+      "period_collected_total": 6,
+      "period_comment_total": 1,
+      "period_share_total": 10,
+      "scanned_note_count": 32,
+      "reached_range_start": true
+    },
+    "source": "playwright_profile_page",
+    "fetched_at": "2026-05-02T17:24:02"
+  }
+}

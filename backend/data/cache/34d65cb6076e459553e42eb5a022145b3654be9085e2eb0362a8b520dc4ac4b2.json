@@ -1,0 +1,84 @@
+{
+  "created_at": 1777713877.214432,
+  "data": {
+    "account": {
+      "input": "6143fb3a000000001f03cf01",
+      "user_id": "6143fb3a000000001f03cf01",
+      "nickname": "",
+      "profile_url": "https://www.xiaohongshu.com/user/profile/6143fb3a000000001f03cf01"
+    },
+    "profile": {
+      "user_id": "6143fb3a000000001f03cf01",
+      "nickname": "扬州香格里拉",
+      "desc": "🏨扬州“三把刀”精致慢生活一站式体验酒店\n👨🏻‍🍳米其林一星餐厅·香宫\n🍵扬州早茶·柳园春茶肆\n🥩咖啡秀自助餐厅主题美食盛宴\n🥂1500平无柱式宴会厅@扬州香格里拉·宴会",
+      "red_id": "1818043988",
+      "gender": 1,
+      "ip_location": "江苏",
+      "follows_count_display": "431",
+      "follows_count_lower_bound": 431,
+      "fans_count_display": "8737",
+      "fans_count_lower_bound": 8737,
+      "interaction_count_display": "95131",
+      "interaction_count_lower_bound": 95131
+    },
+    "notes": [
+      {
+        "note_id": "69f323910000000038020a89",
+        "title": "🌿💍扬州户外草坪婚礼全攻略✨",
+        "desc": "",
+        "type": "normal",
+        "time": "2026-04-30 17:40:33",
+        "last_update_time": "2026-04-30 17:40:33",
+        "xsec_token": "AB9rF-O5QYNnUWf0CGzsogq2OeklSYx-a5z6NZeYMoX-M=",
+        "cover_url": "http://sns-webpic-qc.xhscdn.com/202605021724/a74c114ba591c89a14b78dc7dfa41336/spectrum/1040g34o31vj4485148505oa3vct7vjo1m4g5c0o!nc_n_webp_mw_1",
+        "url": "https://www.xiaohongshu.com/explore/69f323910000000038020a89?xsec_token=AB9rF-O5QYNnUWf0CGzsogq2OeklSYx-a5z6NZeYMoX-M%3D&xsec_source=pc_user",
+        "account_user_id": "6143fb3a000000001f03cf01",
+        "account_nickname": "扬州香格里拉",
+        "liked_count_display": "23",
+        "liked_count": 23,
+        "collected_count_display": "10",
+        "collected_count": 10,
+        "comment_count_display": "1",
+        "comment_count": 1,
+        "share_count_display": "",
+        "share_count": 0
+      },
+      {
+        "note_id": "69f1c29f000000003701d1ad",
+        "title": "🌿逃离计划|3h直达解锁江南园林慢生活！",
+        "desc": "",
+        "type": "normal",
+        "time": "2026-04-29 16:34:39",
+        "last_update_time": "2026-04-29 16:34:39",
+        "xsec_token": "ABB6Mox5N5oH7bVdLkEZCsYq4MnuiuqalcTlFXjyBfnJo=",
+        "cover_url": "http://sns-webpic-qc.xhscdn.com/202605021724/e97d1f9f3664044a02aeffc556b37dc9/spectrum/1040g34o31vhosb4l1m405oa3vct7vjo121plff0!nc_n_webp_mw_1",
+        "url": "https://www.xiaohongshu.com/explore/69f1c29f000000003701d1ad?xsec_token=ABB6Mox5N5oH7bVdLkEZCsYq4MnuiuqalcTlFXjyBfnJo%3D&xsec_source=pc_user",
+        "account_user_id": "6143fb3a000000001f03cf01",
+        "account_nickname": "扬州香格里拉",
+        "liked_count_display": "31",
+        "liked_count": 31,
+        "collected_count_display": "16",
+        "collected_count": 16,
+        "comment_count_display": "1",
+        "comment_count": 1,
+        "share_count_display": "2",
+        "share_count": 2
+      }
+    ],
+    "stats": {
+      "followers_display": "8737",
+      "followers_count": 8737,
+      "period_start": "2026-04-25",
+      "period_end": "2026-05-02",
+      "period_note_count": 2,
+      "period_liked_total": 54,
+      "period_collected_total": 26,
+      "period_comment_total": 2,
+      "period_share_total": 2,
+      "scanned_note_count": 32,
+      "reached_range_start": true
+    },
+    "source": "playwright_profile_page",
+    "fetched_at": "2026-05-02T17:24:37"
+  }
+}

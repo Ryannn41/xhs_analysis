@@ -1,0 +1,84 @@
+{
+  "created_at": 1777713814.5782158,
+  "data": {
+    "account": {
+      "input": "61501fb200000000020226ee",
+      "user_id": "61501fb200000000020226ee",
+      "nickname": "",
+      "profile_url": "https://www.xiaohongshu.com/user/profile/61501fb200000000020226ee"
+    },
+    "profile": {
+      "user_id": "61501fb200000000020226ee",
+      "nickname": "上海浦东香格里拉",
+      "desc": "📍位于黄浦之东，地处陆家嘴金融中心\n客房内可观赏外滩绚丽灯光，或俯瞰城市天际线\n🚶5min可达东方明珠电视塔\n🚗毗邻地铁2号线，可直达机场和火车站\n住宿｜餐饮｜会议｜婚宴",
+      "red_id": "1874212297",
+      "gender": 1,
+      "ip_location": "上海",
+      "follows_count_display": "15",
+      "follows_count_lower_bound": 15,
+      "fans_count_display": "1999",
+      "fans_count_lower_bound": 1999,
+      "interaction_count_display": "10604",
+      "interaction_count_lower_bound": 10604
+    },
+    "notes": [
+      {
+        "note_id": "69eed90d0000000023004753",
+        "title": "五一｜把旅行节奏调成0.5倍速",
+        "desc": "",
+        "type": "normal",
+        "time": "2026-04-27 11:33:33",
+        "last_update_time": "2026-04-27 11:33:34",
+        "xsec_token": "ABwl_9rPxCjpRTEIMkcxahju0jvVEOsIfK2eIu7yKAeYY=",
+        "cover_url": "http://sns-webpic-qc.xhscdn.com/202605021723/72159277c7fff62a7a5ddd1bc54ca65d/1040g2sg31vesf16jigh05oag3up0k9nepshp3rg!nc_n_webp_mw_1",
+        "url": "https://www.xiaohongshu.com/explore/69eed90d0000000023004753?xsec_token=ABwl_9rPxCjpRTEIMkcxahju0jvVEOsIfK2eIu7yKAeYY%3D&xsec_source=pc_user",
+        "account_user_id": "61501fb200000000020226ee",
+        "account_nickname": "上海浦东香格里拉",
+        "liked_count_display": "63",
+        "liked_count": 63,
+        "collected_count_display": "11",
+        "collected_count": 11,
+        "comment_count_display": "1",
+        "comment_count": 1,
+        "share_count_display": "7",
+        "share_count": 7
+      },
+      {
+        "note_id": "69eecafd000000001b023118",
+        "title": "注意❗️上海浦东消费券又来啦",
+        "desc": "",
+        "type": "normal",
+        "time": "2026-04-27 10:33:33",
+        "last_update_time": "2026-04-27 10:33:34",
+        "xsec_token": "ABwl_9rPxCjpRTEIMkcxahjvr4jQ04RBHo6PooxiLCdxI=",
+        "cover_url": "http://sns-webpic-qc.xhscdn.com/202605021723/528f08807d3d5ac1e42c23b1e8a6d861/1040g2sg31vesf16jige05oag3up0k9ne617i0k0!nc_n_webp_mw_1",
+        "url": "https://www.xiaohongshu.com/explore/69eecafd000000001b023118?xsec_token=ABwl_9rPxCjpRTEIMkcxahjvr4jQ04RBHo6PooxiLCdxI%3D&xsec_source=pc_user",
+        "account_user_id": "61501fb200000000020226ee",
+        "account_nickname": "上海浦东香格里拉",
+        "liked_count_display": "2",
+        "liked_count": 2,
+        "collected_count_display": "",
+        "collected_count": 0,
+        "comment_count_display": "",
+        "comment_count": 0,
+        "share_count_display": "",
+        "share_count": 0
+      }
+    ],
+    "stats": {
+      "followers_display": "1999",
+      "followers_count": 1999,
+      "period_start": "2026-04-25",
+      "period_end": "2026-05-02",
+      "period_note_count": 2,
+      "period_liked_total": 65,
+      "period_collected_total": 11,
+      "period_comment_total": 1,
+      "period_share_total": 7,
+      "scanned_note_count": 30,
+      "reached_range_start": true
+    },
+    "source": "playwright_profile_page",
+    "fetched_at": "2026-05-02T17:23:34"
+  }
+}

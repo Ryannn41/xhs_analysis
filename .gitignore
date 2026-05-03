@@ -5,6 +5,5 @@ __pycache__/
 node_modules/
 dist/
 
-# Playwright 登录态与运行缓存
+# Playwright 登录态
 backend/storage/
-backend/data/cache/

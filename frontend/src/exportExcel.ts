@@ -24,7 +24,7 @@ export function exportAccountResultsToExcel(results: AccountResult[]) {
     账号ID: result.account.user_id,
     小红书号: result.profile.red_id || "",
     主页链接: result.account.profile_url,
-    粉丝量: result.stats.followers_count,
+    账号粉丝量: result.stats.followers_count,
     统计开始日期: formatDateText(result.stats.period_start),
     统计结束日期: formatDateText(result.stats.period_end),
     区间帖子数: result.stats.period_note_count,
@@ -33,7 +33,6 @@ export function exportAccountResultsToExcel(results: AccountResult[]) {
     区间评论总量: result.stats.period_comment_total,
     区间转发总量: result.stats.period_share_total,
     抓取时间: result.fetched_at,
-    数据来源: result.cached ? "缓存结果" : "实时抓取",
   }));
 
   const noteRows = results.flatMap((result) =>
@@ -58,7 +57,7 @@ export function exportAccountResultsToExcel(results: AccountResult[]) {
   const summarySheet = XLSX.utils.json_to_sheet(summaryRows);
   const notesSheet = XLSX.utils.json_to_sheet(noteRows);
 
-  setColumnWidths(summarySheet, [18, 28, 16, 54, 12, 14, 14, 12, 14, 14, 14, 14, 22, 12]);
+  setColumnWidths(summarySheet, [18, 28, 16, 54, 12, 14, 14, 12, 14, 14, 14, 14, 22]);
   setColumnWidths(notesSheet, [18, 28, 16, 28, 42, 20, 12, 64, 10, 10, 10, 10, 64]);
 
   XLSX.utils.book_append_sheet(workbook, summarySheet, "账号汇总");

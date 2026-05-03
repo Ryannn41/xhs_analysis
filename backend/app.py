@@ -14,14 +14,12 @@ from backend.config import (
     ensure_runtime_dirs,
 )
 from backend.services.account_resolver import load_account_map, resolve_account
-from backend.services.cache import JsonCache
 from backend.services.xhs_browser import XhsBrowser
 from backend.services.xhs_scraper import scrape_account_profile
 from backend.services.xhs_session import XhsLoginSession
 
 
 browser = XhsBrowser()
-cache = JsonCache()
 login_session = XhsLoginSession()
 
 
@@ -46,7 +44,6 @@ app.add_middleware(
 
 class AccountRequest(BaseModel):
     account: str = Field(..., min_length=1, description="昵称、user_id 或小红书主页 URL")
-    refresh: bool = Field(False, description="跳过缓存并重新抓取")
     start_date: date | None = Field(None, description="统计开始日期")
     end_date: date | None = Field(None, description="统计结束日期")
 
@@ -114,14 +111,6 @@ async def profile(payload: AccountRequest) -> dict[str, Any]:
     if payload.start_date and payload.end_date and payload.start_date > payload.end_date:
         raise HTTPException(status_code=400, detail="开始日期不能晚于结束日期")
 
-    start_date = payload.start_date.isoformat() if payload.start_date else ""
-    end_date = payload.end_date.isoformat() if payload.end_date else ""
-    cache_key = f"profile:v2:{account.user_id}:{start_date}:{end_date}"
-    if not payload.refresh:
-        cached = cache.get(cache_key)
-        if cached:
-            return {**cached, "cached": True}
-
     try:
         result = await scrape_account_profile(
             browser,
@@ -132,5 +121,4 @@ async def profile(payload: AccountRequest) -> dict[str, Any]:
     except Exception as error:
         raise HTTPException(status_code=502, detail=str(error)) from error
 
-    cache.set(cache_key, result)
-    return {**result, "cached": False}
+    return result
