@@ -68,6 +68,7 @@ async def session_status() -> dict[str, Any]:
 @app.post("/api/xhs/session/login/start")
 async def start_login(payload: LoginStartRequest | None = None) -> dict[str, Any]:
     try:
+        await browser.stop()
         if payload and payload.url:
             return await login_session.start(payload.url)
         return await login_session.start()
@@ -86,6 +87,15 @@ async def save_login() -> dict[str, Any]:
 
     await browser.stop()
     return status
+
+
+@app.post("/api/xhs/session/logout")
+async def logout() -> dict[str, Any]:
+    try:
+        await browser.stop()
+        return await login_session.clear()
+    except Exception as error:
+        raise HTTPException(status_code=502, detail=str(error)) from error
 
 
 @app.get("/api/accounts")
@@ -110,6 +120,9 @@ async def profile(payload: AccountRequest) -> dict[str, Any]:
 
     if payload.start_date and payload.end_date and payload.start_date > payload.end_date:
         raise HTTPException(status_code=400, detail="开始日期不能晚于结束日期")
+
+    if login_session.is_active():
+        raise HTTPException(status_code=409, detail="登录窗口仍在打开，请先保存登录态后再抓取。")
 
     try:
         result = await scrape_account_profile(

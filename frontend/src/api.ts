@@ -74,6 +74,7 @@ export interface CurrentUser {
 export interface SessionStatus {
   has_login_state: boolean;
   storage_state: string;
+  browser_profile_dir?: string;
   storage_state_updated_at: string | null;
   current_user: CurrentUser | null;
   login_in_progress: boolean;
@@ -125,6 +126,13 @@ export async function startLoginSession(): Promise<SessionStatus> {
 
 export async function saveLoginSession(): Promise<SessionStatus> {
   const response = await fetch(`${API_BASE_URL}/api/xhs/session/login/save`, {
+    method: "POST",
+  });
+  return parseJsonResponse<SessionStatus>(response);
+}
+
+export async function logoutSession(): Promise<SessionStatus> {
+  const response = await fetch(`${API_BASE_URL}/api/xhs/session/logout`, {
     method: "POST",
   });
   return parseJsonResponse<SessionStatus>(response);

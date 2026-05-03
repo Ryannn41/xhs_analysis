@@ -66,8 +66,12 @@ ACCOUNTS_FILE = _path_from_env("XHS_ACCOUNTS_FILE", DATA_DIR / "accounts.json")
 XHS_BASE_URL = "https://www.xiaohongshu.com"
 XHS_STORAGE_STATE = _path_from_env("XHS_STORAGE_STATE", STORAGE_DIR / "xhs_state.json")
 XHS_CURRENT_USER_FILE = XHS_STORAGE_STATE.with_name("xhs_current_user.json")
+XHS_BROWSER_PROFILE_DIR = _path_from_env(
+    "XHS_BROWSER_PROFILE_DIR",
+    STORAGE_DIR / "browser_profile",
+)
 
-BROWSER_HEADLESS = os.getenv("BROWSER_HEADLESS", "true").lower() in {
+BROWSER_HEADLESS = os.getenv("BROWSER_HEADLESS", "false").lower() in {
     "1",
     "true",
     "yes",
@@ -99,4 +103,5 @@ def ensure_runtime_dirs() -> None:
     if not DATA_DIR.exists() and os.getenv("XHS_DATA_DIR", "").strip():
         DATA_DIR.mkdir(parents=True, exist_ok=True)
     STORAGE_DIR.mkdir(parents=True, exist_ok=True)
+    XHS_BROWSER_PROFILE_DIR.mkdir(parents=True, exist_ok=True)
     CACHE_DIR.mkdir(parents=True, exist_ok=True)

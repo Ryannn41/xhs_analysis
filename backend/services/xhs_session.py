@@ -1,16 +1,19 @@
 from __future__ import annotations
 
 import json
+import shutil
+from contextlib import suppress
 from datetime import datetime
 from pathlib import Path
 from typing import Any
 
-from playwright.async_api import Browser, BrowserContext, Page, Playwright, async_playwright
+from playwright.async_api import BrowserContext, Error as PlaywrightError, Page, Playwright, async_playwright
 
 from backend.config import (
     BROWSER_CHANNEL,
     BROWSER_EXECUTABLE_PATH,
     BROWSER_TIMEOUT_MS,
+    XHS_BROWSER_PROFILE_DIR,
     XHS_CURRENT_USER_FILE,
     XHS_BASE_URL,
     XHS_STORAGE_STATE,
@@ -19,7 +22,14 @@ from backend.config import (
 from backend.services.xhs_browser import xhs_context_options
 
 
-def storage_state_info(storage_state: Path = XHS_STORAGE_STATE) -> dict[str, Any]:
+def profile_dir_has_state(profile_dir: Path = XHS_BROWSER_PROFILE_DIR) -> bool:
+    return profile_dir.exists() and any(profile_dir.iterdir())
+
+
+def storage_state_info(
+    storage_state: Path = XHS_STORAGE_STATE,
+    profile_dir: Path = XHS_BROWSER_PROFILE_DIR,
+) -> dict[str, Any]:
     updated_at = None
     if storage_state.exists():
         updated_at = datetime.fromtimestamp(storage_state.stat().st_mtime).isoformat(
@@ -27,8 +37,9 @@ def storage_state_info(storage_state: Path = XHS_STORAGE_STATE) -> dict[str, Any
         )
 
     return {
-        "has_login_state": storage_state.exists(),
+        "has_login_state": storage_state.exists() or profile_dir_has_state(profile_dir),
         "storage_state": str(storage_state),
+        "browser_profile_dir": str(profile_dir),
         "storage_state_updated_at": updated_at,
     }
 
@@ -214,19 +225,23 @@ def browser_launch_options() -> dict[str, Any]:
 
 
 class XhsLoginSession:
-    def __init__(self, storage_state: Path = XHS_STORAGE_STATE):
+    def __init__(
+        self,
+        storage_state: Path = XHS_STORAGE_STATE,
+        profile_dir: Path = XHS_BROWSER_PROFILE_DIR,
+    ):
         self.storage_state = storage_state
+        self.profile_dir = profile_dir
         self._playwright: Playwright | None = None
-        self._browser: Browser | None = None
         self._context: BrowserContext | None = None
         self._page: Page | None = None
 
     def is_active(self) -> bool:
-        return self._browser is not None
+        return self._context is not None
 
     def status(self) -> dict[str, Any]:
         return {
-            **storage_state_info(self.storage_state),
+            **storage_state_info(self.storage_state, self.profile_dir),
             "current_user": load_current_user() if self.storage_state.exists() else None,
             "login_in_progress": self.is_active(),
         }
@@ -237,13 +252,18 @@ class XhsLoginSession:
 
         ensure_runtime_dirs()
         self.storage_state.parent.mkdir(parents=True, exist_ok=True)
-        self._playwright = await async_playwright().start()
-        self._browser = await self._playwright.chromium.launch(**browser_launch_options())
-        self._context = await self._browser.new_context(
-            **xhs_context_options(self.storage_state)
+        self.profile_dir.mkdir(parents=True, exist_ok=True)
+        if self._playwright is None:
+            self._playwright = await async_playwright().start()
+        context = await self._playwright.chromium.launch_persistent_context(
+            str(self.profile_dir),
+            **browser_launch_options(),
+            **xhs_context_options(),
         )
-        self._context.set_default_timeout(BROWSER_TIMEOUT_MS)
-        self._page = await self._context.new_page()
+        self._context = context
+        context.on("close", lambda *_: self._handle_context_close(context))
+        context.set_default_timeout(BROWSER_TIMEOUT_MS)
+        self._page = await context.new_page()
         await self._page.goto(url)
         return self.status()
 
@@ -258,6 +278,15 @@ class XhsLoginSession:
         await self.close()
         return self.status()
 
+    async def clear(self) -> dict[str, Any]:
+        await self.close()
+        self.storage_state.unlink(missing_ok=True)
+        save_current_user(None)
+        if self.profile_dir.exists():
+            shutil.rmtree(self.profile_dir)
+        self.profile_dir.mkdir(parents=True, exist_ok=True)
+        return self.status()
+
     async def _save_storage_state(self) -> None:
         assert self._context is not None
 
@@ -267,13 +296,17 @@ class XhsLoginSession:
             await self._context.storage_state(path=str(self.storage_state))
 
     async def close(self) -> None:
-        if self._context:
-            await self._context.close()
-            self._context = None
-            self._page = None
-        if self._browser:
-            await self._browser.close()
-            self._browser = None
+        context = self._context
+        self._context = None
+        self._page = None
+        if context:
+            with suppress(PlaywrightError):
+                await context.close()
         if self._playwright:
             await self._playwright.stop()
             self._playwright = None
+
+    def _handle_context_close(self, context: BrowserContext) -> None:
+        if self._context is context:
+            self._context = None
+            self._page = None

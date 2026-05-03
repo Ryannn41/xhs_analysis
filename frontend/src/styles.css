@@ -316,6 +316,14 @@ button:focus-visible {
   background: #292524;
 }
 
+.danger-button {
+  background: var(--danger-text);
+}
+
+.danger-button:hover:not(:disabled) {
+  background: #9f1239;
+}
+
 .session-message,
 .session-error {
   border-radius: var(--radius-sm);

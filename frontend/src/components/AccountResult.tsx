@@ -23,8 +23,9 @@ function noteCountDisplay(display: string | undefined, value: number) {
 export default function AccountResult({ result, animationDelay }: AccountResultProps) {
   const [showAllNotes, setShowAllNotes] = useState(false);
   const { profile, notes, stats } = result;
+  const displayName = profile.nickname || result.account.nickname || result.account.user_id;
   const followers =
-    stats.followers_display || (stats.followers_count ? formatNumber(stats.followers_count) : "-");
+    stats.followers_display || (stats.followers_count ? formatNumber(stats.followers_count) : "未读取");
 
   const statsAnchorId = useMemo(() => {
     const raw = result.account.user_id || "account";
@@ -39,7 +40,7 @@ export default function AccountResult({ result, animationDelay }: AccountResultP
       <div className="result-header">
         <div>
           <p className="eyebrow">实时抓取</p>
-          <h2>{profile.nickname || result.account.user_id}</h2>
+          <h2>{displayName}</h2>
           <p>{profile.desc || "暂无简介"}</p>
         </div>
         <a
@@ -87,8 +88,8 @@ export default function AccountResult({ result, animationDelay }: AccountResultP
         <span>
           统计时间：{stats.period_start || "-"} 至 {stats.period_end || "-"}
         </span>
-        <span>小红书号：{profile.red_id || "-"}</span>
-        <span>IP：{profile.ip_location || "-"}</span>
+        {profile.red_id ? <span>小红书号：{profile.red_id}</span> : null}
+        {profile.ip_location ? <span>IP：{profile.ip_location}</span> : null}
         <span>抓取时间：{result.fetched_at}</span>
       </div>
 

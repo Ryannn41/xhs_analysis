@@ -33,6 +33,10 @@ export default function App() {
   const successfulResults = results
     .map((item) => item.result)
     .filter((result): result is AccountResultData => Boolean(result));
+  const exportSummary =
+    loading && batchProgress
+      ? `已完成 ${results.length}/${batchProgress.total} 个，成功 ${successfulResults.length} 个`
+      : `已生成 ${successfulResults.length} 个账号的统计结果`;
 
   async function handleSearch(
     accounts: AccountInput[],
@@ -201,7 +205,7 @@ export default function App() {
       {successfulResults.length ? (
         <div className="export-dock">
           <div className="export-dock-inner">
-            <span>已生成 {successfulResults.length} 个账号的统计结果</span>
+            <span>{exportSummary}</span>
             <div className="export-dock-actions">
               <button type="button" onClick={() => exportAccountResultsToExcel(successfulResults)}>
                 下载 Excel

@@ -15,6 +15,7 @@ a = Analysis(
     binaries=[],
     datas=datas,
     hiddenimports=[
+        "backend.app",
         "uvicorn.logging",
         "uvicorn.loops.auto",
         "uvicorn.protocols.http.auto",

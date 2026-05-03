@@ -1029,7 +1029,7 @@ async def scrape_account_profile(
     end_date: date | None = None,
 ) -> dict[str, Any]:
     period_start, period_end = normalize_period(start_date, end_date)
-    context, page = await browser.new_page()
+    page = await browser.new_page()
     response_payloads: list[Any] = []
     response_tasks: set[asyncio.Task] = set()
 
@@ -1116,4 +1116,4 @@ async def scrape_account_profile(
             raise RuntimeError("未能读取账号资料或笔记，可能页面结构变化、登录态失效或触发风控。")
         return result
     finally:
-        await context.close()
+        await page.close()

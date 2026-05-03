@@ -9,6 +9,8 @@ const HEALTH_URL = `http://${BACKEND_HOST}:${BACKEND_PORT}/health`;
 
 let backendProcess = null;
 let backendStartError = null;
+let backendReady = false;
+let backendOutput = "";
 let mainWindow = null;
 
 function waitForBackend(timeoutMs = 45000) {
@@ -19,6 +21,7 @@ function waitForBackend(timeoutMs = 45000) {
       const request = http.get(HEALTH_URL, (response) => {
         response.resume();
         if (response.statusCode && response.statusCode >= 200 && response.statusCode < 300) {
+          backendReady = true;
           resolve();
           return;
         }
@@ -78,6 +81,8 @@ function startBackend() {
     return;
   }
   backendStartError = null;
+  backendReady = false;
+  backendOutput = "";
 
   const backend = getBackendCommand();
   const userDataDir = app.getPath("userData");
@@ -85,6 +90,7 @@ function startBackend() {
     ...process.env,
     BACKEND_HOST,
     BACKEND_PORT: String(BACKEND_PORT),
+    BROWSER_HEADLESS: process.env.BROWSER_HEADLESS || "false",
     XHS_DESKTOP_MODE: "true",
     XHS_USER_DATA_DIR: userDataDir,
     FRONTEND_ORIGINS: "http://localhost:5173,http://127.0.0.1:5173,null",
@@ -97,11 +103,25 @@ function startBackend() {
   backendProcess = spawn(backend.command, backend.args, {
     cwd: backend.cwd,
     env,
-    stdio: app.isPackaged ? "ignore" : "inherit",
+    stdio: app.isPackaged ? ["ignore", "pipe", "pipe"] : "inherit",
     windowsHide: true,
   });
 
-  backendProcess.on("exit", () => {
+  if (app.isPackaged) {
+    const appendOutput = (chunk) => {
+      backendOutput = `${backendOutput}${chunk.toString()}`.slice(-4000);
+    };
+    backendProcess.stdout?.on("data", appendOutput);
+    backendProcess.stderr?.on("data", appendOutput);
+  }
+
+  backendProcess.on("exit", (code, signal) => {
+    if (!backendReady) {
+      const detail = backendOutput.trim();
+      backendStartError = new Error(
+        `后端进程已退出（code=${code ?? "null"}, signal=${signal ?? "null"}）${detail ? `\n${detail}` : ""}`,
+      );
+    }
     backendProcess = null;
   });
   backendProcess.on("error", (error) => {

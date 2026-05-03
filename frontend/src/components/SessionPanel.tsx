@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import {
   SessionStatus,
   fetchSessionStatus,
+  logoutSession,
   saveLoginSession,
   startLoginSession,
 } from "../api";
@@ -43,6 +44,7 @@ export default function SessionPanel() {
   const currentUser = status?.current_user;
   const displayName = currentUser?.nickname || "当前登录账号";
   const avatarText = displayName.slice(0, 1).toUpperCase();
+  const canLogout = Boolean(status?.has_login_state || status?.login_in_progress);
 
   return (
     <section className="session-card">
@@ -98,6 +100,14 @@ export default function SessionPanel() {
           disabled={loading || !status?.login_in_progress}
         >
           保存登录态
+        </button>
+        <button
+          type="button"
+          className="danger-button"
+          onClick={() => runSessionAction(logoutSession, "已退出登录，登录态已清除")}
+          disabled={loading || !canLogout}
+        >
+          退出登录
         </button>
       </div>
       {message ? <p className="session-message">{message}</p> : null}
