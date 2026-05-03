@@ -37,12 +37,14 @@ xhs_analysis/
 
 ## 启动后端
 
+开发环境可以直接启动 FastAPI：
+
 ```bash
 python -m venv backend/.venv
 source backend/.venv/bin/activate
 pip install -r backend/requirements.txt
 playwright install chromium
-uvicorn backend.app:app --reload --host 0.0.0.0 --port 8000
+python -m backend.run_server
 ```
 
 如果抓取小红书页面出现 `Page.goto: net::ERR_TIMED_OUT`，建议延长超时：
@@ -67,6 +69,8 @@ python -m backend.save_xhs_state
 
 ## 启动前端
 
+开发环境单独启动 Vite：
+
 ```bash
 cd frontend
 npm install
@@ -78,6 +82,34 @@ npm run dev
 ```bash
 VITE_API_BASE_URL=http://127.0.0.1:8000 npm run dev
 ```
+
+## Windows 桌面版打包
+
+交付给普通 Windows 用户时，目标是让用户无需安装 Node、Python、pip 依赖或 Playwright 浏览器。桌面版由 Electron 加载前端构建产物，并自动启动随包分发的 `backend.exe`。
+
+推荐在 Windows 原生环境执行打包，不建议只在 WSL 里产出正式安装包：
+
+```powershell
+npm install
+npm --prefix frontend install
+npm run desktop:dist:win
+```
+
+打包流程会生成：
+
+- `dist/backend/backend.exe`：PyInstaller 打包的 FastAPI 后端。
+- `dist/ms-playwright`：随包分发的 Playwright Chromium。
+- `release`：electron-builder 生成的 Windows 安装包或免安装包。
+
+桌面版启动时会把登录态、当前登录用户和缓存写到 Windows 用户应用数据目录。开发默认仍使用 `backend/storage/xhs_state.json`，也可以通过 `.env` 覆盖：
+
+```env
+XHS_USER_DATA_DIR=
+XHS_STORAGE_STATE=
+XHS_CACHE_DIR=
+```
+
+当前桌面构建依赖最新 Electron/electron-builder，建议 Windows 打包机使用 Node.js 22 或更新版本。
 
 ## 账号解析
 

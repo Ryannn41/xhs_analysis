@@ -1,26 +1,70 @@
 from __future__ import annotations
 
 import os
+import sys
 from pathlib import Path
 
 
-BASE_DIR = Path(__file__).resolve().parent
-ROOT_DIR = BASE_DIR.parent
+APP_NAME = "XHS Analysis"
+
+
+def _bundle_root() -> Path:
+    if getattr(sys, "frozen", False):
+        return Path(getattr(sys, "_MEIPASS", Path(sys.executable).resolve().parent))
+    return Path(__file__).resolve().parent.parent
+
+
+ROOT_DIR = _bundle_root()
+BASE_DIR = ROOT_DIR / "backend"
+if not BASE_DIR.exists():
+    BASE_DIR = Path(__file__).resolve().parent
+
+
+def _path_from_env(name: str, default: Path, *, base: Path = ROOT_DIR) -> Path:
+    value = os.getenv(name, "").strip()
+    if not value:
+        return default
+
+    path = Path(value).expanduser()
+    return path if path.is_absolute() else base / path
+
+
+def _default_user_data_dir() -> Path | None:
+    value = os.getenv("XHS_USER_DATA_DIR", "").strip()
+    if value:
+        return Path(value).expanduser()
+
+    if os.getenv("XHS_DESKTOP_MODE", "").lower() not in {"1", "true", "yes"}:
+        return None
+
+    local_app_data = os.getenv("LOCALAPPDATA", "").strip()
+    if local_app_data:
+        return Path(local_app_data) / APP_NAME
+    return Path.home() / "AppData" / "Local" / APP_NAME
 
 try:
     from dotenv import load_dotenv
 
     load_dotenv(ROOT_DIR / ".env")
+    if getattr(sys, "frozen", False):
+        load_dotenv(Path(sys.executable).resolve().parent / ".env")
 except ImportError:
     pass
 
-DATA_DIR = BASE_DIR / "data"
-STORAGE_DIR = BASE_DIR / "storage"
-ACCOUNTS_FILE = DATA_DIR / "accounts.json"
+USER_DATA_DIR = _default_user_data_dir()
+DATA_DIR = _path_from_env("XHS_DATA_DIR", BASE_DIR / "data")
+STORAGE_DIR = _path_from_env(
+    "XHS_STORAGE_DIR",
+    (USER_DATA_DIR / "storage") if USER_DATA_DIR else BASE_DIR / "storage",
+)
+CACHE_DIR = _path_from_env(
+    "XHS_CACHE_DIR",
+    (USER_DATA_DIR / "cache") if USER_DATA_DIR else DATA_DIR / "cache",
+)
+ACCOUNTS_FILE = _path_from_env("XHS_ACCOUNTS_FILE", DATA_DIR / "accounts.json")
 
 XHS_BASE_URL = "https://www.xiaohongshu.com"
-_storage_state = Path(os.getenv("XHS_STORAGE_STATE", str(STORAGE_DIR / "xhs_state.json")))
-XHS_STORAGE_STATE = _storage_state if _storage_state.is_absolute() else ROOT_DIR / _storage_state
+XHS_STORAGE_STATE = _path_from_env("XHS_STORAGE_STATE", STORAGE_DIR / "xhs_state.json")
 XHS_CURRENT_USER_FILE = XHS_STORAGE_STATE.with_name("xhs_current_user.json")
 
 BROWSER_HEADLESS = os.getenv("BROWSER_HEADLESS", "true").lower() in {
@@ -50,5 +94,9 @@ FRONTEND_ORIGIN_REGEX = os.getenv(
 
 
 def ensure_runtime_dirs() -> None:
-    DATA_DIR.mkdir(parents=True, exist_ok=True)
+    if USER_DATA_DIR:
+        USER_DATA_DIR.mkdir(parents=True, exist_ok=True)
+    if not DATA_DIR.exists() and os.getenv("XHS_DATA_DIR", "").strip():
+        DATA_DIR.mkdir(parents=True, exist_ok=True)
     STORAGE_DIR.mkdir(parents=True, exist_ok=True)
+    CACHE_DIR.mkdir(parents=True, exist_ok=True)

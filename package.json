@@ -1,5 +1,59 @@
 {
+  "name": "xhs-analysis-desktop",
+  "version": "0.1.0",
+  "private": true,
+  "main": "electron/main.js",
+  "scripts": {
+    "frontend:install": "npm --prefix frontend install",
+    "frontend:build": "npm --prefix frontend run build",
+    "backend:build:win": "powershell -ExecutionPolicy Bypass -File scripts/build-backend-win.ps1",
+    "desktop:dev": "electron .",
+    "desktop:pack": "npm run frontend:build && electron-builder --win --dir",
+    "desktop:dist": "npm run frontend:build && electron-builder --win",
+    "desktop:dist:win": "npm run backend:build:win && npm run desktop:dist"
+  },
   "dependencies": {
     "xlsx": "^0.18.5"
+  },
+  "devDependencies": {
+    "electron": "^41.5.0",
+    "electron-builder": "^26.8.1"
+  },
+  "build": {
+    "appId": "com.xhsanalysis.desktop",
+    "productName": "小红书账号分析",
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "electron/**/*",
+      "frontend/dist/**/*"
+    ],
+    "extraResources": [
+      {
+        "from": "dist/backend",
+        "to": "backend",
+        "filter": [
+          "**/*"
+        ]
+      },
+      {
+        "from": "dist/ms-playwright",
+        "to": "ms-playwright",
+        "filter": [
+          "**/*"
+        ]
+      }
+    ],
+    "win": {
+      "target": [
+        "nsis",
+        "portable"
+      ]
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true
+    }
   }
 }

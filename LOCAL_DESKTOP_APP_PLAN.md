@@ -85,32 +85,31 @@ Electron 桌面壳
   + 本地数据目录和登录态目录
 ```
 
-开发阶段可以分两步走。
+开发阶段仍可以保留本机命令用于调试，但首个面向用户的交付物必须是 Windows 开箱即用版本，不能要求用户安装 Node、Python、pip 依赖或手动安装 Playwright 浏览器。
 
-### 阶段 1：本地一键启动版
+### 阶段 1：Windows 桌面版骨架
 
-目标：先让开发者/内部用户可以一键启动。
-
-可做内容：
-
-- 编写启动脚本，同时启动 FastAPI 后端和 Vite 前端。
-- 确认登录、抓取、导出 Excel 在本机稳定运行。
-- README 补充 conda/venv 两种启动方式。
-
-这一阶段用户可能仍需要本机环境，不作为正式分发版。
-
-### 阶段 2：Electron 开发版
-
-目标：用 Electron 打开应用窗口，并自动启动本地后端。
+目标：先打通 Electron + React + 打包后端的桌面应用骨架。
 
 可做内容：
 
 - 新增 Electron 主进程。
-- Electron 启动时拉起本地后端。
-- Electron 窗口加载前端页面。
+- Electron 启动时拉起打包后的 `backend.exe`。
+- Electron 窗口加载 React 前端构建产物。
 - 关闭窗口时停止后端进程。
 
-开发阶段可以先让 Electron 调用本机已有的 Python/uvicorn。
+开发时可以临时调用本机 Python/uvicorn 验证问题，但不能作为用户交付方式。
+
+### 阶段 2：后端与浏览器随包分发
+
+目标：用户电脑无需安装 Python 或 Playwright。
+
+可做内容：
+
+- 使用 PyInstaller 或 Nuitka 打包后端为 `backend.exe`。
+- 将 Playwright Chromium 安装到打包资源目录。
+- Electron 启动后端时注入 `PLAYWRIGHT_BROWSERS_PATH`、用户数据目录等环境变量。
+- 登录态、缓存和导出相关数据放到 Windows 用户应用数据目录。
 
 ### 阶段 3：正式安装包
 
@@ -152,11 +151,10 @@ WSL 可以继续用于日常开发和验证业务逻辑。
 
 - 确认当前本地浏览器登录流程稳定。
 - 确认 `.env` 中 `BROWSER_HEADLESS` 对抓取浏览器生效。
-- 整理本地运行 README，弱化云端部署说明。
-- 增加本地一键启动脚本。
+- 整理本地运行和 Windows 打包 README，弱化云端部署说明。
 - 评估 Electron 与 Tauri，优先 Electron，因为生态成熟且适合包装现有 React 前端。
-- 新增 Electron 主进程，自动启动/停止后端。
-- 研究 PyInstaller 打包 FastAPI + Playwright 的方式。
+- 新增 Electron 主进程，自动启动/停止打包后的后端。
+- 研究并落地 PyInstaller 打包 FastAPI + Playwright 的方式。
 - 确定用户数据目录，例如登录态、缓存和导出文件保存位置。
 - 打包 Windows 测试版。
 
