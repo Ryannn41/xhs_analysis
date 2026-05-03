@@ -22,6 +22,7 @@
   "build": {
     "appId": "com.xhsanalysis.desktop",
     "productName": "小红书账号分析",
+    "icon": "build/icon.png",
     "directories": {
       "output": "release"
     },

@@ -5,6 +5,7 @@ __pycache__/
 node_modules/
 dist/
 build/
+!build/icon.png
 release/
 
 # Playwright 登录态
